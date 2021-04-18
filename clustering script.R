@@ -18,12 +18,12 @@ fviz_nbclust(data, kmeans, method = "wss") +
   geom_vline(xintercept = 3, linetype = 2) + # add line for better visualization
   labs(subtitle = "Elbow method") # add subtitle
 
+ggsave(here("Images/Elbor method.png"))
 
 # 2.  Silhouette method
 
 fviz_nbclust(data, kmeans, method = "silhouette") +
   labs(subtitle = "Silhouette method")
-
 
 # Clustering method:  k-means clustering
 
@@ -55,13 +55,16 @@ barplot(hclust$height,
 
 # Clustering method:  Enhanced hierarchical clustering
 
-res.hc <- eclust(data, "hclust", k = 4,
+res.hc <- eclust(data, "hclust", k = 3,
                  method = "ward.D2", graph = FALSE) 
 
 head(res.hc$cluster, 15)
 
 # Dendrogram
 fviz_dend(res.hc, rect = TRUE, show_labels = TRUE, cex = 0.5) 
+
+
+
 
 fviz_cluster(res.hc, ellipse.type = "norm", ellipse.level = 0.68)
 
@@ -70,14 +73,19 @@ fviz_silhouette(res.hc)
 
 # Clustering method: Combining hierarchical clustering and k-means (Compute hierarchical k-means clustering)
 
-res.hk <-hkmeans(data, 4)
+res.hk <-hkmeans(data, 3)
 
 
 # Visualize the tree
 fviz_dend(res.hk, cex = 0.6, rect = TRUE)
 
+ggsave(here("Images/Dendogram.png"))
+
 # Visualize the hkmeans final clusters
 fviz_cluster(res.hk, ellipse.type = "norm", ellipse.level = 0.68)
+
+ggsave(here("Images/Cluster plot.png"))
+
 
 
 # Learning resources
